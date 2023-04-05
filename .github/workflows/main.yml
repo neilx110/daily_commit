@@ -1,0 +1,23 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天 0 点执行任务
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      
+    - name: Modify File
+      run: |
+        echo "# Add a new line" >> ./commit_file
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Daily Commit
